@@ -63,18 +63,20 @@ def fib(request):
 		try:
 			data = request.POST["data"]
 			received = json.loads(data)
+			jsob.update(received)
 
 			###########################
 			##custom function below####
 			###########################
-			starNumber = int(jsob ["starNumber"])
+			startNumber = int(jsob ["startNumber"])
 			length = int (jsob ["length"])
 			loop = range(length)
 
 			numarray = []
 
-			fibno = starNumber
+			fibno = startNumber
 			addno = 1
+			
 			for l in loop:
 				numarray.append(fibno)
 				fibno = fibno + addno
@@ -88,5 +90,4 @@ def fib(request):
 			errorType = str(exc_type)
 			return JsonResponse({"isError": True, "error":str(e), "errorType":errorType, "function":fname, "line":exc_tb.tb_lineno, "log":log})
 	else:
-		return HttpResponse("ONLY POST REQUESTS")
-
+		return JsonResponse (jsob)
