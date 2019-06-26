@@ -91,3 +91,9 @@ def fib(request):
 			return JsonResponse({"isError": True, "error":str(e), "errorType":errorType, "function":fname, "line":exc_tb.tb_lineno, "log":log})
 	else:
 		return JsonResponse (jsob)
+
+
+	@csrf_exempt
+	def test(request):
+		print ('hello world')
+		return JsonResponse (jsob)
