@@ -22,7 +22,7 @@ def example_get(request, var_a, var_b):
 
 @csrf_exempt
 def example_post(request):
-	jsob = {"starNumber": 0, "length": 10}
+	jsob = {"starNumber": 0, "length": 30}
 	log = []
 	if request.method == "POST":
 		try:
@@ -32,7 +32,7 @@ def example_post(request):
 			###########################
 			##custom function below####
 			###########################
-			starNumber = int(son ["starNumber"])
+			starNumber = int(jsob ["starNumber"])
 			length = int (jsob ["length"])
 			loop = range(length)
 
@@ -95,5 +95,16 @@ def fib(request):
 
 	@csrf_exempt
 	def test(request):
+		jsob = {"starNumber": 0, "length": 10}
+		log = []
+		if request.method == "POST":
+			try:
+				data = request.POST["data"]
+				received = json.loads(data)
+				jsob.update(received)
+
+
 		print ('hello world')
 		return JsonResponse (jsob)
+
+
