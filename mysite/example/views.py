@@ -22,30 +22,11 @@ def example_get(request, var_a, var_b):
 
 @csrf_exempt
 def example_post(request):
-	jsob = {"starNumber": 0, "length": 30}
 	log = []
 	if request.method == "POST":
 		try:
 			data = request.POST["data"]
-			received = json.loads(data)
-
-			###########################
-			##custom function below####
-			###########################
-			starNumber = int(jsob ["starNumber"])
-			length = int (jsob ["length"])
-			loop = range(length)
-
-			numarray = []
-
-			fibno = starNumber
-			addno = 1
-			for l in loop:
-				numarray.append(fibno)
-				fibno = fibno + addno
-				addno = fibno - addno
-
-			return JsonResponse({"fib":numarray})
+			return JsonResponse({"log":log})
 		except Exception as e:
 			exc_type, exc_obj, exc_tb = sys.exc_info()
 			other = sys.exc_info()[0].__name__
@@ -55,9 +36,10 @@ def example_post(request):
 	else:
 		return HttpResponse("ONLY POST REQUESTS")
 
+
 @csrf_exempt
 def fib(request):
-	jsob = {"starNumber": 0, "length": 10}
+	jsob = {"startNumber": 0, "length": 10} #defaults
 	log = []
 	if request.method == "POST":
 		try:
@@ -65,22 +47,23 @@ def fib(request):
 			received = json.loads(data)
 			jsob.update(received)
 
-			###########################
-			##custom function below####
-			###########################
-			startNumber = int(jsob ["startNumber"])
-			length = int (jsob ["length"])
+			#######################
+			#Custom Function Below#
+			#######################
+			startNumber = int(jsob["startNumber"])
+			length = int(jsob["length"])
 			loop = range(length)
+
 
 			numarray = []
 
 			fibno = startNumber
 			addno = 1
-			
+
 			for l in loop:
 				numarray.append(fibno)
-				fibno = fibno + addno
-				addno = fibno - addno
+				fibno = fibno+addno
+				addno = fibno-addno
 
 			return JsonResponse({"fib":numarray})
 		except Exception as e:
@@ -88,23 +71,44 @@ def fib(request):
 			other = sys.exc_info()[0].__name__
 			fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
 			errorType = str(exc_type)
-			return JsonResponse({"isError": True, "error":str(e), "errorType":errorType, "function":fname, "line":exc_tb.tb_lineno, "log":log})
+			return JsonResponse({"isError": True, "error":str(e), "errorType":errorType, "function":fname, "line":exc_tb.tb_lineno, "log":log})		
 	else:
-		return JsonResponse (jsob)
+		return JsonResponse(jsob)
 
 
-	@csrf_exempt
-	def test(request):
-		jsob = {"starNumber": 0, "length": 10}
-		log = []
-		if request.method == "POST":
-			try:
-				data = request.POST["data"]
-				received = json.loads(data)
-				jsob.update(received)
+@csrf_exempt
+def div(request):
+	jsob = {"startNumber": 1000, "length": 10} #defaults
+	log = []
+	if request.method == "POST":
+		try:
+			data = request.POST["data"]
+			received = json.loads(data)
+			jsob.update(received)
+
+			#######################
+			#Custom Function Below#
+			#######################
+			startNumber = int(jsob["startNumber"])
+			length = int(jsob["length"])
+			loop = range(length)
 
 
-		print ('hello world')
-		return JsonResponse (jsob)
+			numarray = []
 
+			divno = startNumber
+			divisor = 2
 
+			for l in loop:
+				numarray.append(divno)
+				divno = divno/divisor
+
+			return JsonResponse({"div":numarray})
+		except Exception as e:
+			exc_type, exc_obj, exc_tb = sys.exc_info()
+			other = sys.exc_info()[0].__name__
+			fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+			errorType = str(exc_type)
+			return JsonResponse({"isError": True, "error":str(e), "errorType":errorType, "function":fname, "line":exc_tb.tb_lineno, "log":log})		
+	else:
+		return JsonResponse(jsob)
