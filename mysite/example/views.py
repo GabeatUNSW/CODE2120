@@ -102,6 +102,7 @@ def div(request):
 			for l in loop:
 				numarray.append(divno)
 				divno = divno / divisor
+			print(divno) 
 
 			return JsonResponse({"div":numarray})
 		except Exception as e:
